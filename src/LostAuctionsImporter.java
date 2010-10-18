@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -104,7 +105,9 @@ public class LostAuctionsImporter {
 		System.out.println("done.");
 		
 		System.out.print("Generating CSV file... ");
-		writeReversedItemsToFile(infoItems.toArray(new ItemInfo[0]), "auctions.txt");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar c1 = Calendar.getInstance(); // today
+		writeReversedItemsToFile(infoItems.toArray(new ItemInfo[0]), sdf.format(c1.getTime()) + ".txt");
 		System.out.println("done.");
 	}
 	
