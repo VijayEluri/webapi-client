@@ -44,19 +44,20 @@ public class LostAuctionsImporter {
 		String accountType = "not_won";
 		int offset = 0;
 		int itemsArray[] = {};
-		int limit = 100;
+		int limit = 25;
 		System.out.print("Accessing lost auctions... ");
-		MyAccountStruct2[] doMyAccount2 = port
-				.doMyAccount2(sessionHandlePart.value, accountType, offset,
-						itemsArray, limit);
-		System.out.println("done.");
+		MyAccountStruct2[] doMyAccount2;
+		do {
+			doMyAccount2 = port.doMyAccount2(sessionHandlePart.value,
+					accountType, offset, itemsArray, limit);
 
-		for (int i = 0; i < doMyAccount2.length; i++) {
-			String[] myAccountArray = doMyAccount2[i].getMyAccountArray();
-			System.out.println("=== item #" + i);
-			for (int j = 0; j < myAccountArray.length; j++) {
-				System.out.println(myAccountArray[j]);
+			for (int i = 0; i < doMyAccount2.length; i++) {
+				String[] myAccountArray = doMyAccount2[i].getMyAccountArray();
+				System.out.println("=> item #" + (offset+i)+ " id="+myAccountArray[0]+", cena="+myAccountArray[2]+", end="+myAccountArray[7]+", title="+myAccountArray[9]);
 			}
-		}
+			
+			offset += limit;
+		} while(doMyAccount2.length > 0);
+		System.out.println("done.");
 	}
 }
