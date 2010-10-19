@@ -19,7 +19,7 @@ public class GoogleCalendarApiSynchronizer {
 		
 		for (Iterator<ItemInfo> iterator = auctions.iterator(); iterator.hasNext();) {
 			ItemInfo itemInfo = (ItemInfo) iterator.next();
-			if (!googleClient.isAuctionAdded(itemInfo))
+			if (googleClient.isInFuture(itemInfo) && !googleClient.isAuctionAdded(itemInfo))
 				googleClient.addAuction(itemInfo);
 		}
 	}

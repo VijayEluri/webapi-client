@@ -109,7 +109,7 @@ public class AllegroWebApiClient {
 	
 	public static long dateStringToLong(String s) {
 		try {
-			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = (Date) formatter.parse(s);
 			long l = date.getTime();
 			return l;
