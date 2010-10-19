@@ -53,8 +53,7 @@ public class AllegroWebApiClient {
 		System.out.println("done.");
 	}
 
-	public List<ItemInfo> getNotWonAuctions() throws RemoteException {
-		String accountType = "not_won";
+	public List<ItemInfo> collectAuctions(final String accountType) throws RemoteException {
 		int offset = 0;
 		int itemsArray[] = {};
 		int limit = 25;
@@ -108,12 +107,7 @@ public class AllegroWebApiClient {
 		return infoItems;
 	}
 	
-	public List<ItemInfo> getIncomingAuctions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private static long dateStringToLong(String s) {
+	public static long dateStringToLong(String s) {
 		try {
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = (Date) formatter.parse(s);

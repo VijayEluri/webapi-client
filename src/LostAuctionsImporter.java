@@ -17,7 +17,7 @@ public class LostAuctionsImporter {
 	public static void main(String[] args) throws Exception {
 		
 		AllegroWebApiClient allegroWebApiClient = new AllegroWebApiClient(args[0], args[1], args[2]);
-		List<ItemInfo> infoItems = allegroWebApiClient.getNotWonAuctions();
+		List<ItemInfo> infoItems = allegroWebApiClient.collectAuctions("not_won");
 		
 		System.out.print("Generating CSV file... ");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
