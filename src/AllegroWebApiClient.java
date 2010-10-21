@@ -75,9 +75,11 @@ public class AllegroWebApiClient {
 				// [0] identyfikator aukcji,
 				item.setItId(Long.parseLong(myAccountArray[0]));
 				// [1] cena wywoławcza przedmiotu (lub 0.00 gdy nie została ustawiona),
+				item.setItStartingPrice(Float.parseFloat(myAccountArray[1]));
 				// [2] obecna cena przedmiotu,
 				item.setItPrice(Float.parseFloat(myAccountArray[2]));
 				// [3] cena minimalna przedmiotu (lub 0.00 gdy nie została ustawiona),
+				item.setItReservePrice(Float.parseFloat(myAccountArray[3]));
 				// [4] cena Kup Teraz! (lub 0.00 gdy nie została ustawiona),
 				item.setItBuyNowPrice(Float.parseFloat(myAccountArray[4]));
 				// [5] liczba przedmiotów dostępnych na aukcji,
@@ -91,8 +93,9 @@ public class AllegroWebApiClient {
 				// [10] liczba złożonych w aukcji ofert,
 				item.setItHitCount(Long.parseLong(myAccountArray[10]));
 				// [11] identyfikator sprzedającego,
-				item.setItSellerLogin(myAccountArray[11]);
+				item.setItSellerId(Long.parseLong(myAccountArray[11]));
 				// [12] identyfikator kraju,
+				item.setItCountry(Integer.parseInt(myAccountArray[12]));
 				// [13] wartość informująca o wybranych dla aukcji opcjach dodatkowych (więcej),
 				// [14] maksymalna cena oferowana za przedmiot przez użytkownika,
 				// [15] maksymalna cena oferowana za przedmiot,
@@ -105,11 +108,15 @@ public class AllegroWebApiClient {
 				// [22] liczba punktów kupującego (lub 0 w przypadku braku ofert),
 				// [23] kraj kupującego (lub 0 w przypadku braku ofert),
 				// [24] nazwa sprzedającego,
+				item.setItSellerLogin(myAccountArray[24]);
 				// [25]	liczba punktów sprzedającego,
+				item.setItSellerRating(Integer.parseInt(myAccountArray[25]));
 				// [26]	kraj sprzedającego,
 				// [27]	liczba osób obserwujących aukcję (lub '-' w przypadku braku obserwujących),
 				// [28]	informacja o tym, czy w aukcji włączona  jest opcja Kup Teraz! (1 - jest, 0 - nie jest),
+				item.setItBuyNowActive(Integer.parseInt(myAccountArray[28]));
 				// [29]	liczba zdjęć dołączonych do aukcji,
+				item.setItFotoCount(Integer.parseInt(myAccountArray[29]));
 				// [30]	treść notatki dodanej przez sprzedającego do aukcji (widoczna tylko dla sprzedającego, dla pozostałych oraz w przypadku braku notatki zwracane jest 0),
 				// [31]	informacja o tym, na ile minut przed końcem aukcji ma zostać wysłane e-mailem przypomnienie o tym fakcie (dot. aukcji obserwowanych),
 				// [32]	tekstowy status aukcji oczekującej na wystawienie (np. 'Oczekuje', 'Wstrzymana przez administratora Allegro', itp.),
@@ -117,27 +124,20 @@ public class AllegroWebApiClient {
 				// [34]	pole zdezaktualizowane (zawsze będzie zwracać NULL),
 				// [35]	pole zdezaktualizowane (zawsze będzie zwracać NULL).
 				
-//				item.setItBankAccount1();
-//				item.setItBankAccount2(itBankAccount2);
-//				item.setItBidCount(itBidCount);
-//				item.setItBuyNowActive(itBuyNowActive);
-//				item.setItCountry(itCountry);
-//				item.setItDescription(itDescription);
-//				item.setItFotoCount(itFotoCount);
-//				item.setItHighBidder(itHighBidder);
-//				item.setItIsEco(itIsEco);
-//				item.setItLocation(itLocation);
-//				item.setItOptions(itOptions);
-//				item.setItPostcode(itPostcode);
-//				item.setItQuantity(itQuantity);
-//				item.setItReservePrice(Float.parseFloat(myAccountArray[3]));
-//				item.setItSellerId(itSellerId);
-//				item.setItSellerRating(itSellerRating);
-//				item.setItStartingPrice(Float.parseFloat(myAccountArray[1]));
-//				item.setItStartingQuantity(itStartingQuantity);
-//				item.setItStartingTime(dateStringToLong(myAccountArray[6]));
-//				item.setItState(itState);
-//				item.setItVatInvoice(itVatInvoice);
+				// item.setItBankAccount1();
+				// item.setItBankAccount2(itBankAccount2);
+				// item.setItBidCount(itBidCount);
+				// item.setItDescription(itDescription);
+				// item.setItHighBidder(itHighBidder);
+				// item.setItIsEco(itIsEco);
+				// item.setItLocation(itLocation);
+				// item.setItOptions(itOptions);
+				// item.setItPostcode(itPostcode);
+				// item.setItQuantity(itQuantity);
+				// item.setItStartingQuantity(itStartingQuantity);
+				// item.setItStartingTime(dateStringToLong(myAccountArray[6]));
+				// item.setItState(itState);
+				// item.setItVatInvoice(itVatInvoice);
 				infoItems.add(item);
 			}
 			

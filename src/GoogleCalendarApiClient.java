@@ -68,7 +68,8 @@ public class GoogleCalendarApiClient {
 
 		myEntry.setTitle(new PlainTextConstruct(ENTRY_PREFIX
 				+ itemInfo.getItName() + "(" + itemInfo.getItId() + ")"));
-		 myEntry.setContent(new PlainTextConstruct(itemInfo.getItLocation()));
+		// TODO: add link to the action
+//		myEntry.setContent(new PlainTextConstruct(itemInfo.getItLocation()));
 
 		DateTime startTime = DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo
