@@ -24,6 +24,7 @@ public class LostAuctionsImporter {
 		Calendar c1 = Calendar.getInstance(); // today
 		writeReversedItemsToFile(infoItems.toArray(new ItemInfo[0]), sdf.format(c1.getTime()) + ".txt");
 		System.out.println("done.");
+		System.out.println("End of line.");
 	}
 	
 	private static String dateLongToString(long l) {

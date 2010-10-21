@@ -38,19 +38,16 @@ public class GoogleCalendarApiClient {
 		
 		// TODO: check by auction ID not time
 		
-		// FIXME: return true when entry added for '2010-10-20 15:33:00' 
-		// and checked for '2010-10-20 15:35:13' and '2010-10-20 15:39:42'
-		
 		CalendarQuery myQuery = new CalendarQuery(feedUrl);
 		// use the same time for min and max
 		myQuery.setMinimumStartTime(DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo
 						.getItEndingTime()
-						- ENTRY_START - 60 * 1000))); // minute before
+						- ENTRY_START - 1000))); // a second before
 		myQuery.setMaximumStartTime(DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo
 						.getItEndingTime()
-						- ENTRY_START + 60 * 1000))); // minute after
+						- ENTRY_START + 1000))); // a second after
 
 		CalendarEventFeed resultFeed = myService.query(myQuery,
 				CalendarEventFeed.class);
@@ -58,7 +55,8 @@ public class GoogleCalendarApiClient {
 			CalendarEventEntry firstMatchEntry = (CalendarEventEntry) resultFeed
 					.getEntries().get(0);
 			String entryTitle = firstMatchEntry.getTitle().getPlainText();
-			if (entryTitle.equals(ENTRY_PREFIX + itemInfo.getItName()))
+			if (entryTitle.equals(ENTRY_PREFIX + itemInfo.getItName() + "("
+					+ itemInfo.getItId() + ")"))
 				return true;
 		}
 		return false;
@@ -69,10 +67,8 @@ public class GoogleCalendarApiClient {
 		CalendarEventEntry myEntry = new CalendarEventEntry();
 
 		myEntry.setTitle(new PlainTextConstruct(ENTRY_PREFIX
-				+ itemInfo.getItName()));
-		// myEntry.setContent(new
-		// PlainTextConstruct("Meet for a quick lesson."));
-		// TODO: link to the auction
+				+ itemInfo.getItName() + "(" + itemInfo.getItId() + ")"));
+		 myEntry.setContent(new PlainTextConstruct(itemInfo.getItLocation()));
 
 		DateTime startTime = DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo

@@ -33,7 +33,7 @@ public class AllegroWebApiClient {
 		final String userPassword = password;
 		final int countryCode = 1;
 		final String webapiKey = key;
-		final long localVerKey = 27553933;
+		final long localVerKey = 60377802;
 
 		StringHolder info = new StringHolder();
 		LongHolder currentVerKey = new LongHolder();
@@ -41,8 +41,11 @@ public class AllegroWebApiClient {
 		System.out.print("Receving key version... ");
 		port.doQuerySysStatus(1, countryCode, webapiKey, info, currentVerKey);
 		System.out.println("done. Current version key=" + currentVerKey.value);
-
-		assert (localVerKey == currentVerKey.value);
+		
+		if (localVerKey != currentVerKey.value) {
+			System.out.println("Key versions don't match! Aborting.");
+			System.exit(-1);
+		}
 
 		sessionHandlePart = new StringHolder();
 		LongHolder userId = new LongHolder();
@@ -68,29 +71,67 @@ public class AllegroWebApiClient {
 				String[] myAccountArray = doMyAccount2[i].getMyAccountArray();
 				System.out.println("=> item #" + (offset+i+1)+ " id="+myAccountArray[0]+", cena="+myAccountArray[2]+", end="+myAccountArray[7]+", title="+myAccountArray[9]);
 				ItemInfo item = new ItemInfo();
+				
+				// [0] identyfikator aukcji,
+				item.setItId(Long.parseLong(myAccountArray[0]));
+				// [1] cena wywoławcza przedmiotu (lub 0.00 gdy nie została ustawiona),
+				// [2] obecna cena przedmiotu,
+				item.setItPrice(Float.parseFloat(myAccountArray[2]));
+				// [3] cena minimalna przedmiotu (lub 0.00 gdy nie została ustawiona),
+				// [4] cena Kup Teraz! (lub 0.00 gdy nie została ustawiona),
+				item.setItBuyNowPrice(Float.parseFloat(myAccountArray[4]));
+				// [5] liczba przedmiotów dostępnych na aukcji,
+				// [6] czas rozpoczęcia aukcji (w czasie jej trwania, widzi ją tylko sprzedający),
+				// [7] czas zakończenia aukcji,
+				item.setItEndingTime(dateStringToLong(myAccountArray[7])); 
+				// [8] identyfikator kupującego oferującego najwyższą cenę (lub 0 gdy nikt jeszcze nie złożył oferty),
+				item.setItHighBidderLogin(myAccountArray[8]);
+				// [9] tytuł aukcji,
+				item.setItName(myAccountArray[9]);
+				// [10] liczba złożonych w aukcji ofert,
+				item.setItHitCount(Long.parseLong(myAccountArray[10]));
+				// [11] identyfikator sprzedającego,
+				item.setItSellerLogin(myAccountArray[11]);
+				// [12] identyfikator kraju,
+				// [13] wartość informująca o wybranych dla aukcji opcjach dodatkowych (więcej),
+				// [14] maksymalna cena oferowana za przedmiot przez użytkownika,
+				// [15] maksymalna cena oferowana za przedmiot,
+				// [16] liczba przedmiotów, które do tej pory nie zostały sprzedane, ale jeszcze mogą zostać sprzedane (dot. aukcji trwających),
+				// [17] liczba przedmiotów, które zostały do tej pory sprzedane (dot. aukcji trwających),
+				// [18] pole zdezaktualizowane (zawsze będzie zwracać NULL),
+				// [19] liczba sprzedanych przedmiotów (dot. aukcji zakończonych),
+				// [20] liczba niesprzedanych przedmiotów (dot. aukcji zakończonych),
+				// [21] nazwa kupującego (lub 0 w przypadku braku ofert, pełna wartość pola widoczna jest tylko dla sprzedającego w danej aukcji, dla pozostałych w polu zwracana jest nazwa użytkownika w formie zanonimizowanej: X...Y),
+				// [22] liczba punktów kupującego (lub 0 w przypadku braku ofert),
+				// [23] kraj kupującego (lub 0 w przypadku braku ofert),
+				// [24] nazwa sprzedającego,
+				// [25]	liczba punktów sprzedającego,
+				// [26]	kraj sprzedającego,
+				// [27]	liczba osób obserwujących aukcję (lub '-' w przypadku braku obserwujących),
+				// [28]	informacja o tym, czy w aukcji włączona  jest opcja Kup Teraz! (1 - jest, 0 - nie jest),
+				// [29]	liczba zdjęć dołączonych do aukcji,
+				// [30]	treść notatki dodanej przez sprzedającego do aukcji (widoczna tylko dla sprzedającego, dla pozostałych oraz w przypadku braku notatki zwracane jest 0),
+				// [31]	informacja o tym, na ile minut przed końcem aukcji ma zostać wysłane e-mailem przypomnienie o tym fakcie (dot. aukcji obserwowanych),
+				// [32]	tekstowy status aukcji oczekującej na wystawienie (np. 'Oczekuje', 'Wstrzymana przez administratora Allegro', itp.),
+				// [33]	liczba wyświetleń aukcji,
+				// [34]	pole zdezaktualizowane (zawsze będzie zwracać NULL),
+				// [35]	pole zdezaktualizowane (zawsze będzie zwracać NULL).
+				
 //				item.setItBankAccount1();
 //				item.setItBankAccount2(itBankAccount2);
 //				item.setItBidCount(itBidCount);
 //				item.setItBuyNowActive(itBuyNowActive);
-				item.setItBuyNowPrice(Float.parseFloat(myAccountArray[4]));
 //				item.setItCountry(itCountry);
 //				item.setItDescription(itDescription);
-				item.setItEndingTime(dateStringToLong(myAccountArray[7])); 
 //				item.setItFotoCount(itFotoCount);
 //				item.setItHighBidder(itHighBidder);
-				item.setItHighBidderLogin(myAccountArray[8]);
-				item.setItHitCount(Long.parseLong(myAccountArray[10]));
-				item.setItId(Long.parseLong(myAccountArray[0]));
 //				item.setItIsEco(itIsEco);
 //				item.setItLocation(itLocation);
-				item.setItName(myAccountArray[9]);
 //				item.setItOptions(itOptions);
 //				item.setItPostcode(itPostcode);
-				item.setItPrice(Float.parseFloat(myAccountArray[2]));
 //				item.setItQuantity(itQuantity);
 //				item.setItReservePrice(Float.parseFloat(myAccountArray[3]));
 //				item.setItSellerId(itSellerId);
-				item.setItSellerLogin(myAccountArray[10]);
 //				item.setItSellerRating(itSellerRating);
 //				item.setItStartingPrice(Float.parseFloat(myAccountArray[1]));
 //				item.setItStartingQuantity(itStartingQuantity);

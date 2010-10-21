@@ -22,5 +22,7 @@ public class GoogleCalendarApiSynchronizer {
 			if (googleClient.isInFuture(itemInfo) && !googleClient.isAuctionAdded(itemInfo))
 				googleClient.addAuction(itemInfo);
 		}
+
+		System.out.println("End of line.");
 	}
 }
