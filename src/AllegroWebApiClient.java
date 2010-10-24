@@ -106,7 +106,7 @@ public class AllegroWebApiClient {
 		// [9] tytuł aukcji,
 		item.setItName(s[9]);
 		// [10] liczba złożonych w aukcji ofert,
-		item.setItHitCount(Long.parseLong(s[10]));
+		item.setItBidCount(Integer.parseInt(s[10]));
 		// [11] identyfikator sprzedającego,
 		item.setItSellerId(Long.parseLong(s[11]));
 		// [12] identyfikator kraju,
@@ -120,6 +120,7 @@ public class AllegroWebApiClient {
 		// [19] liczba sprzedanych przedmiotów (dot. aukcji zakończonych),
 		// [20] liczba niesprzedanych przedmiotów (dot. aukcji zakończonych),
 		// [21] nazwa kupującego (lub 0 w przypadku braku ofert, pełna wartość pola widoczna jest tylko dla sprzedającego w danej aukcji, dla pozostałych w polu zwracana jest nazwa użytkownika w formie zanonimizowanej: X...Y),
+		item.setItHighBidderLogin(s[21]);
 		// [22] liczba punktów kupującego (lub 0 w przypadku braku ofert),
 		// [23] kraj kupującego (lub 0 w przypadku braku ofert),
 		// [24] nazwa sprzedającego,
@@ -131,7 +132,8 @@ public class AllegroWebApiClient {
 		// [28]	informacja o tym, czy w aukcji włączona  jest opcja Kup Teraz! (1 - jest, 0 - nie jest),
 		item.setItBuyNowActive(s[28].equals("NULL") ? 0 : Integer.parseInt(s[28]));
 		// [29]	liczba zdjęć dołączonych do aukcji,
-		item.setItFotoCount(Integer.parseInt(s[29]));
+		item.setItHighBidder(Integer.parseInt(s[29]));
+//		item.setItFotoCount(Integer.parseInt(s[29]));
 		// [30]	treść notatki dodanej przez sprzedającego do aukcji (widoczna tylko dla sprzedającego, dla pozostałych oraz w przypadku braku notatki zwracane jest 0),
 		// [31]	informacja o tym, na ile minut przed końcem aukcji ma zostać wysłane e-mailem przypomnienie o tym fakcie (dot. aukcji obserwowanych),
 		// [32]	tekstowy status aukcji oczekującej na wystawienie (np. 'Oczekuje', 'Wstrzymana przez administratora Allegro', itp.),
@@ -143,7 +145,6 @@ public class AllegroWebApiClient {
 		// item.setItBankAccount2(itBankAccount2);
 		// item.setItBidCount(itBidCount);
 		// item.setItDescription(itDescription);
-		// item.setItHighBidder(itHighBidder);
 		// item.setItIsEco(itIsEco);
 		// item.setItLocation(itLocation);
 		// item.setItOptions(itOptions);
