@@ -1,4 +1,7 @@
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +13,8 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.holders.LongHolder;
 import javax.xml.rpc.holders.StringHolder;
 
+import org.apache.axis.encoding.Base64;
+
 import AllegroWebApi.AllegroWebApiPortType;
 import AllegroWebApi.AllegroWebApiServiceLocator;
 import AllegroWebApi.ItemInfo;
@@ -20,7 +25,8 @@ public class AllegroWebApiClient {
 	private StringHolder sessionHandlePart;
 
 	public AllegroWebApiClient(String username, String password, String key)
-			throws RemoteException, ServiceException {
+			throws RemoteException, ServiceException, NoSuchAlgorithmException,
+			UnsupportedEncodingException {
 
 		// Make a service
 		AllegroWebApiServiceLocator service = new AllegroWebApiServiceLocator();
@@ -51,11 +57,19 @@ public class AllegroWebApiClient {
 		LongHolder userId = new LongHolder();
 		LongHolder serverTime = new LongHolder();
 		System.out.print("Logging in... ");
-		port.doLogin(userLogin, userPassword, countryCode, webapiKey,
-				localVerKey, sessionHandlePart, userId, serverTime);
+		port.doLoginEnc(userLogin, encryptAndEncodePassword(userPassword),
+				countryCode, webapiKey, localVerKey, sessionHandlePart, userId,
+				serverTime);
 		System.out.println("done.");
 	}
 
+	private String encryptAndEncodePassword(String password)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(password.getBytes("UTF-8"));
+		return Base64.encode(md.digest());
+	}
+	
 	public List<ItemInfo> collectAuctions(final String accountType) throws RemoteException {
 		int offset = 0;
 		int itemsArray[] = {};
