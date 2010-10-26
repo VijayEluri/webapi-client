@@ -39,7 +39,7 @@ public class AllegroWebApiClient {
 		final String userPassword = password;
 		final int countryCode = 1;
 		final String webapiKey = key;
-		final long localVerKey = 60377802;
+		final long localVerKey = 17501172;
 
 		StringHolder info = new StringHolder();
 		LongHolder currentVerKey = new LongHolder();
