@@ -39,7 +39,7 @@ public class AllegroWebApiClient {
 		final String userPassword = password;
 		final int countryCode = 1;
 		final String webapiKey = key;
-		final long localVerKey = 17501172;
+		long localVerKey = 17501172;
 
 		StringHolder info = new StringHolder();
 		LongHolder currentVerKey = new LongHolder();
@@ -49,8 +49,8 @@ public class AllegroWebApiClient {
 		System.out.println("done. Current version key=" + currentVerKey.value);
 		
 		if (localVerKey != currentVerKey.value) {
-			System.out.println("Key versions don't match! Aborting.");
-			System.exit(-1);
+			System.err.println("Warning: key versions don't match!");
+			localVerKey = currentVerKey.value;
 		}
 
 		sessionHandlePart = new StringHolder();
