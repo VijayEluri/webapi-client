@@ -22,6 +22,7 @@ public class LostAuctionsImporter {
 		System.out.print("Generating CSV file... ");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar c1 = Calendar.getInstance(); // today
+		// TODO: filer out actions without a winner
 		writeReversedItemsToFile(infoItems.toArray(new ItemInfo[0]), sdf.format(c1.getTime()) + ".txt");
 		System.out.println("done.");
 		System.out.println("End of line.");

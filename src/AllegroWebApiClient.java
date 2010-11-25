@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.security.MessageDigest;
@@ -39,7 +44,7 @@ public class AllegroWebApiClient {
 		final String userPassword = password;
 		final int countryCode = 1;
 		final String webapiKey = key;
-		long localVerKey = 17501172;
+		long localVerKey = readAllegroKey();
 
 		StringHolder info = new StringHolder();
 		LongHolder currentVerKey = new LongHolder();
@@ -74,7 +79,7 @@ public class AllegroWebApiClient {
 		int offset = 0;
 		int itemsArray[] = {};
 		int limit = 25;
-		System.out.println("Accessing lost auctions... ");
+		System.out.println("Accessing '" + accountType + "' auctions... ");
 		MyAccountStruct2[] doMyAccount2;
 		List<ItemInfo> infoItems = new ArrayList<ItemInfo>();
 		do {
@@ -181,5 +186,29 @@ public class AllegroWebApiClient {
 			System.out.println("Exception :" + e);
 		}
 		return 0;
+	}
+	
+	private long readAllegroKey() {
+		DataInputStream in = null;
+		try {
+			FileInputStream fstream = new FileInputStream("allegro.key");
+			in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			while ((strLine = br.readLine()) != null) {
+				return Long.parseLong(strLine);
+			}
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (in!=null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		return -1;
 	}
 }
