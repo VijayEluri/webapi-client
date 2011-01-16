@@ -1,5 +1,9 @@
+package webapi;
 import java.util.Iterator;
 import java.util.List;
+
+import webapi.client.AllegroWebApiClient;
+import webapi.client.GoogleCalendarApiClient;
 
 import AllegroWebApi.ItemInfo;
 
@@ -8,7 +12,7 @@ import AllegroWebApi.ItemInfo;
  * 
  * This version uses Google Calendar API to add events.
  */
-public class GoogleCalendarApiSynchronizer {
+public class GoogleCalendarSynchronizer {
 
 	public static void main(String[] args) throws Exception {
 		

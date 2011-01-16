@@ -1,9 +1,11 @@
+import webapi.client.AllegroWebApiClient;
+import webapi.client.GoogleCalendarApiClient;
 import junit.framework.TestCase;
 
 public class DateTimeConversionsTest extends TestCase {
 
 	public void testTheBeginningOfTime() {
-		assertEquals("1970-01-01T00:00:00+02:00", GoogleCalendarApiClient
+		assertEquals("1970-01-01T00:00:00+0:00", GoogleCalendarApiClient
 				.dateLongToGoogleDateString(0));
 	}
 

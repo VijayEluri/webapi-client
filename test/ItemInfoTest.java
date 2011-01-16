@@ -1,3 +1,4 @@
+import webapi.client.AllegroWebApiClient;
 import junit.framework.TestCase;
 import AllegroWebApi.ItemInfo;
 
