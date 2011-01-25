@@ -1,10 +1,10 @@
 package webapi;
+
 import java.util.Iterator;
 import java.util.List;
 
 import webapi.client.AllegroWebApiClient;
 import webapi.client.GoogleCalendarApiClient;
-
 import AllegroWebApi.ItemInfo;
 
 /**
@@ -15,18 +15,27 @@ import AllegroWebApi.ItemInfo;
 public class GoogleCalendarSynchronizer {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		AllegroWebApiClient allegroClient = new AllegroWebApiClient(args[0], args[1], args[2]);
 		List<ItemInfo> auctions = allegroClient.collectAuctions("bid");
-		
+
 		GoogleCalendarApiClient googleClient = new GoogleCalendarApiClient(args[3], args[4]);
-		
+
+		int added = 0;
 		for (Iterator<ItemInfo> iterator = auctions.iterator(); iterator.hasNext();) {
 			ItemInfo itemInfo = (ItemInfo) iterator.next();
-			if (googleClient.isInFuture(itemInfo) && !googleClient.isAuctionAdded(itemInfo))
+			if (googleClient.isInFuture(itemInfo) && !googleClient.isAuctionAdded(itemInfo)) {
 				googleClient.addAuction(itemInfo);
+				added++;
+			}
 		}
 
-		System.out.println("End of line.");
+		StringBuffer sb = new StringBuffer();
+		sb.append("Added ");
+		sb.append(added);
+		sb.append(" out of ");
+		sb.append(auctions.size());
+		sb.append(" upcoming auctions.");
+		System.out.println(sb.toString());
 	}
 }
