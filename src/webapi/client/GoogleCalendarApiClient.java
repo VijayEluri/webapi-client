@@ -22,7 +22,7 @@ public class GoogleCalendarApiClient {
 	private CalendarService myService;
 	private URL feedUrl;
 	private static final String ENTRY_PREFIX = "Allegro: ";
-	private static final long ENTRY_START = 30 * 60 * 1000; // 30 minutes
+	private static final long ENTRY_START = 1 * 60 * 1000; // 1 minute
 
 	public GoogleCalendarApiClient(String username, String password)
 			throws AuthenticationException, MalformedURLException {
@@ -38,8 +38,6 @@ public class GoogleCalendarApiClient {
 	public boolean isAuctionAdded(ItemInfo itemInfo) throws IOException,
 			ServiceException {
 		
-		// TODO: check by auction ID not time
-		
 		CalendarQuery myQuery = new CalendarQuery(feedUrl);
 		// use the same time for min and max
 		myQuery.setMinimumStartTime(DateTime
@@ -53,10 +51,8 @@ public class GoogleCalendarApiClient {
 
 		CalendarEventFeed resultFeed = myService.query(myQuery,
 				CalendarEventFeed.class);
-		if (resultFeed.getEntries().size() > 0) {
-			CalendarEventEntry firstMatchEntry = (CalendarEventEntry) resultFeed
-					.getEntries().get(0);
-			String entryTitle = firstMatchEntry.getTitle().getPlainText();
+		for (CalendarEventEntry entry : resultFeed.getEntries()) {
+			String entryTitle = entry.getTitle().getPlainText();
 			if (entryTitle.equals(ENTRY_PREFIX + itemInfo.getItName() + "("
 					+ itemInfo.getItId() + ")"))
 				return true;
@@ -70,8 +66,8 @@ public class GoogleCalendarApiClient {
 
 		myEntry.setTitle(new PlainTextConstruct(ENTRY_PREFIX
 				+ itemInfo.getItName() + "(" + itemInfo.getItId() + ")"));
-		// TODO: add link to the action
-//		myEntry.setContent(new PlainTextConstruct(itemInfo.getItLocation()));
+		myEntry.setContent(new PlainTextConstruct(
+				"http://allegro.pl/show_item.php?item=" + itemInfo.getItId()));
 
 		DateTime startTime = DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo
