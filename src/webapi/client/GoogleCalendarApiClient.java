@@ -13,6 +13,7 @@ import com.google.gdata.data.DateTime;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarEventFeed;
+import com.google.gdata.data.extensions.Reminder;
 import com.google.gdata.data.extensions.When;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -21,11 +22,11 @@ public class GoogleCalendarApiClient {
 	private CalendarService myService;
 	private URL feedUrl;
 	private static final String ENTRY_PREFIX = "Allegro: ";
-	private static final long ENTRY_START = 30 * 60 * 1000; // 30 minutes
+	private static final long ENTRY_START = 1 * 60 * 1000; // 1 minute
 
 	public GoogleCalendarApiClient(String username, String password)
 			throws AuthenticationException, MalformedURLException {
-		System.out.print("Logging in to Google... ");
+		System.out.print("Logging to Google... ");
 		myService = new CalendarService("exampleCo-exampleApp-1");
 		myService.setUserCredentials(username, password);
 
@@ -36,8 +37,6 @@ public class GoogleCalendarApiClient {
 
 	public boolean isAuctionAdded(ItemInfo itemInfo) throws IOException,
 			ServiceException {
-		
-		// TODO: check by auction ID not time
 		
 		CalendarQuery myQuery = new CalendarQuery(feedUrl);
 		// use the same time for min and max
@@ -52,10 +51,8 @@ public class GoogleCalendarApiClient {
 
 		CalendarEventFeed resultFeed = myService.query(myQuery,
 				CalendarEventFeed.class);
-		if (resultFeed.getEntries().size() > 0) {
-			CalendarEventEntry firstMatchEntry = (CalendarEventEntry) resultFeed
-					.getEntries().get(0);
-			String entryTitle = firstMatchEntry.getTitle().getPlainText();
+		for (CalendarEventEntry entry : resultFeed.getEntries()) {
+			String entryTitle = entry.getTitle().getPlainText();
 			if (entryTitle.equals(ENTRY_PREFIX + itemInfo.getItName() + "("
 					+ itemInfo.getItId() + ")"))
 				return true;
@@ -69,8 +66,8 @@ public class GoogleCalendarApiClient {
 
 		myEntry.setTitle(new PlainTextConstruct(ENTRY_PREFIX
 				+ itemInfo.getItName() + "(" + itemInfo.getItId() + ")"));
-		// TODO: add link to the action
-//		myEntry.setContent(new PlainTextConstruct(itemInfo.getItLocation()));
+		myEntry.setContent(new PlainTextConstruct(
+				"http://allegro.pl/show_item.php?item=" + itemInfo.getItId()));
 
 		DateTime startTime = DateTime
 				.parseDateTime(dateLongToGoogleDateString(itemInfo
@@ -83,7 +80,12 @@ public class GoogleCalendarApiClient {
 		eventTimes.setStartTime(startTime);
 		eventTimes.setEndTime(endTime);
 		myEntry.addTime(eventTimes);
-
+		
+		Reminder reminder = new Reminder();
+		reminder.setMethod(Reminder.Method.SMS);
+		reminder.setMinutes(new Integer(15));
+		myEntry.getReminder().add(reminder);
+		
 		// Send the request and receive the response:
 		CalendarEventEntry insertedEntry = myService.insert(feedUrl, myEntry);
 		System.out.println("Event '" + insertedEntry.getTitle().getPlainText()
