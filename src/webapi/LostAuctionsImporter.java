@@ -1,5 +1,6 @@
 package webapi;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -40,7 +41,11 @@ public class LostAuctionsImporter {
 	
 	private static void writeReversedItemsToFile(ItemInfo[] items,
 			String filePath) throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(filePath));
+		File file = new File(filePath);
+		File parent = file.getParentFile();
+		if (!parent.exists())
+			parent.mkdir();
+		BufferedWriter out = new BufferedWriter(new FileWriter(file));
 		for (int i = items.length - 1; i >= 0; i--) {
 			ItemInfo item = items[i];
 			out.write(dateLongToString(item.getItEndingTime()) + ";"
