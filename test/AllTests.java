@@ -8,6 +8,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(DateTimeConversionsTest.class);
 		suite.addTestSuite(ItemInfoTest.class);
+		suite.addTestSuite(LostAuctionsImporterTest.class);
 		//$JUnit-END$
 		return suite;
 	}
