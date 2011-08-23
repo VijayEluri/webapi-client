@@ -48,12 +48,8 @@ public class LostAuctionsImporter {
 	}
 	
 	public void merge(File oldFile, File newFile) throws IOException {
-		String[] oldFileLines = {};
-		String[] newFileLines = {};
-		if (oldFile.exists())
-			oldFileLines = IOUtils.readLines(oldFile);
-		if (newFile.exists())
-			newFileLines = IOUtils.readLines(newFile);
+		String[] oldFileLines = IOUtils.readLines(oldFile);
+		String[] newFileLines = IOUtils.readLines(newFile);
 		Set<String> set = new HashSet<String>(oldFileLines.length);
 		set.addAll(Arrays.asList(oldFileLines));
 		set.addAll(Arrays.asList(newFileLines));

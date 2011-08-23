@@ -27,6 +27,8 @@ public class IOUtils {
 	}
 	
 	public static String[] readLines(File file) throws IOException {
+		if (!file.exists())
+			return new String[0];
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		List<String> result = new ArrayList<String>();
 		String line;
