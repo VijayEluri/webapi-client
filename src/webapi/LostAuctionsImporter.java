@@ -34,7 +34,7 @@ public class LostAuctionsImporter {
 		System.out.println("done.");
 		
 		System.out.print("Merging with previously collected data... ");
-		importer.merge(new File("output/merged-not-cleaned.txt"), newFile);
+		importer.merge(new File("output/merged-raw.csv"), newFile);
 		System.out.println("done.");
 
 		System.out.println("End of line.");
