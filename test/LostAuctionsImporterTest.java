@@ -101,5 +101,5 @@ public class LostAuctionsImporterTest extends TestCase{
 		file = IOUtils.createFile(file, lines);
 		filesToDelete.add(file);
 		return file;
-	}	
+	}
 }

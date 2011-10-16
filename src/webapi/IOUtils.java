@@ -8,15 +8,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class IOUtils {
 	
-	public static File createFile(File file, List<String> list) throws IOException{
+	public static File createFile(File file, List<String> list)
+			throws IOException {
+		File parent = file.getParentFile();
+		if (!parent.exists())
+			parent.mkdir();
 		BufferedWriter out = new BufferedWriter(new FileWriter(file));
-		for (String line : list) {
-			out.write(line);
-			out.newLine();
+		for (Iterator<String> iter = list.iterator(); iter.hasNext(); ) {
+			out.write(iter.next());
+		    if (iter.hasNext())
+		    	out.newLine();
 		}
 		out.close();
 		return file;
@@ -38,6 +44,4 @@ public class IOUtils {
 		in.close();
 		return result.toArray(new String[0]);
 	}
-
-
 }

@@ -68,18 +68,13 @@ public class LostAuctionsImporter {
 	private File writeReversedItemsToFile(ItemInfo[] items,
 			String filePath) throws IOException {
 		File file = new File(filePath);
-		File parent = file.getParentFile();
-		if (!parent.exists())
-			parent.mkdir();
-		BufferedWriter out = new BufferedWriter(new FileWriter(file));
+		List<String> itemsAsString = new ArrayList<String>(items.length);
 		for (int i = items.length - 1; i >= 0; i--) {
 			ItemInfo item = items[i];
-			out.write(dateLongToString(item.getItEndingTime()) + ";"
+			itemsAsString.add(dateLongToString(item.getItEndingTime()) + ";"
 					+ Float.toString(item.getItPrice()).replace('.', ',') + ";"
 					+ item.getItId() + ";" + item.getItName());
-			out.newLine();
 		}
-		out.close();
-		return file;
+		return IOUtils.createFile(file, itemsAsString);
 	}
 }
