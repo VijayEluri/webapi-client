@@ -21,10 +21,10 @@ import javax.xml.rpc.holders.StringHolder;
 
 import org.apache.axis.encoding.Base64;
 
-import AllegroWebApi.AllegroWebApiPortType;
-import AllegroWebApi.AllegroWebApiServiceLocator;
-import AllegroWebApi.ItemInfo;
-import AllegroWebApi.MyAccountStruct2;
+import com.allegro.webapi.AllegroWebApiPortType;
+import com.allegro.webapi.AllegroWebApiServiceLocator;
+import com.allegro.webapi.ItemInfo;
+import com.allegro.webapi.MyAccountStruct2;
 
 public class AllegroWebApiClient {
 	private AllegroWebApiPortType port;
@@ -78,7 +78,7 @@ public class AllegroWebApiClient {
 	
 	public List<ItemInfo> collectAuctions(final String accountType) throws RemoteException {
 		int offset = 0;
-		int itemsArray[] = {};
+		long itemsArray[] = {};
 		int limit = 25;
 		System.out.println("Accessing '" + accountType + "' auctions... ");
 		MyAccountStruct2[] doMyAccount2;

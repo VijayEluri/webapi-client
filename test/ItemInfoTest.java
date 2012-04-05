@@ -1,6 +1,6 @@
 import webapi.client.AllegroWebApiClient;
 import junit.framework.TestCase;
-import AllegroWebApi.ItemInfo;
+import com.allegro.webapi.ItemInfo;
 
 public class ItemInfoTest extends TestCase {
 	

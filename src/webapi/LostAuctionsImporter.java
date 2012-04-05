@@ -16,7 +16,7 @@ import java.util.Set;
 
 import webapi.client.AllegroWebApiClient;
 
-import AllegroWebApi.ItemInfo;
+import com.allegro.webapi.ItemInfo;
 
 /**
  * Imports lost auctions list from Allegro.pl to a spreadsheet at Google Docs. 
