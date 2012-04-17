@@ -5,7 +5,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import AllegroWebApi.ItemInfo;
+import com.allegro.webapi.ItemInfo;
 
 import com.google.gdata.client.calendar.CalendarQuery;
 import com.google.gdata.client.calendar.CalendarService;

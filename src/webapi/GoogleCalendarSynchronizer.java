@@ -5,7 +5,7 @@ import java.util.List;
 
 import webapi.client.AllegroWebApiClient;
 import webapi.client.GoogleCalendarApiClient;
-import AllegroWebApi.ItemInfo;
+import com.allegro.webapi.ItemInfo;
 
 /**
  * Add pending auctions at Allegro.pl to Google Calendar.
